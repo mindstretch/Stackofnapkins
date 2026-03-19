@@ -62,22 +62,7 @@
   .value-title { font-size: 16px; font-weight: 600; margin-bottom: 10px; letter-spacing: -0.2px; }
   .value-desc { font-size: 14px; font-weight: 300; color: var(--muted); line-height: 1.75; }
 
-  /* TEAM */
-  .team-section { max-width: 1080px; margin: 0 auto; padding: 80px 56px; }
-  .team-section h2 { font-size: clamp(28px, 4vw, 40px); font-weight: 700; letter-spacing: -1px; margin-bottom: 12px; }
-  .team-section > p { font-size: 15px; font-weight: 300; color: var(--muted); margin-bottom: 48px; line-height: 1.7; max-width: 480px; }
-  .team-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
-  .team-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 32px; }
-  .team-avatar {
-    width: 52px; height: 52px; border-radius: 12px;
-    background: linear-gradient(135deg, var(--accent-light), var(--rust));
-    display: flex; align-items: center; justify-content: center;
-    font-size: 22px; margin-bottom: 16px;
-  }
-  .team-name { font-size: 16px; font-weight: 600; letter-spacing: -0.2px; margin-bottom: 4px; }
-  .team-role { font-size: 12px; font-weight: 500; color: var(--accent); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 12px; }
-  .team-bio { font-size: 14px; font-weight: 300; color: var(--muted); line-height: 1.7; }
-  .team-note { font-family: 'Caveat', cursive; font-size: 14px; color: var(--rust); opacity: 0.5; margin-top: 10px; display: block; transform: rotate(-1deg); }
+
 
   .cta { text-align: center; padding: 120px 56px; }
   .cta h2 { font-size: clamp(30px, 4vw, 52px); font-weight: 700; letter-spacing: -1.5px; line-height: 1.06; margin-bottom: 16px; }
@@ -105,20 +90,22 @@
 
 <div class="story">
   <p class="eyebrow">About</p>
-  <h1>We started this<br>on a <span class="grad-text">napkin.</span></h1>
+  <h1>Most businesses are running<br>at <span class="grad-text">half capacity.</span></h1>
 
   <div class="story-body">
-    <p>That's actually true. Stack of Napkins came out of building our own products — a wellness app, a reputation management tool — and realizing that the most valuable thing we'd built wasn't the products themselves. <strong>It was the agents running them.</strong></p>
+    <p>Not because people aren't working hard. Because the wrong things are taking their time. The inbox that needs managing. The follow-ups that never happen. The reports nobody reads because nobody has time to write them. The reviews that go unanswered for weeks.</p>
 
-    <p>The onboarding agent that handled 800+ signups without a single manual email. The review agent that monitored three platforms, drafted responses, and posted them — while we were doing other things. The briefing agent that told us what happened overnight so we didn't have to check.</p>
+    <p>These aren't strategy problems. <strong>They're bandwidth problems.</strong> And bandwidth problems have a different kind of solution.</p>
 
-    <blockquote class="pull-quote">"We built AI that ran our business. Then we realized we could build it for yours."</blockquote>
+    <blockquote class="pull-quote">"Every business has more potential than its people have hours. Agents close that gap."</blockquote>
 
-    <p>Most businesses aren't missing a strategy. They're missing bandwidth. The same 20 tasks that eat half their week — the inbox management, the follow-ups, the review responses, the internal reporting — are exactly the kind of work an agent is good at. <strong>Repetitive, rule-based, time-consuming, and easy to forget.</strong></p>
+    <p>We started Stack of Napkins because we believe most businesses are one well-deployed agent away from running significantly better. Not a chatbot. Not a workflow tool. An agent that owns a real piece of your operations — briefing you, handling customers, watching your numbers, following up — while your team focuses on the work that actually needs them.</p>
 
-    <p>We're not an AI consultancy. We don't do strategy decks. We build agents, deploy them, and run them. The name is intentional — great ideas start on napkins. Ours just happen to run on AI.</p>
+    <p>The businesses that figure this out first won't just be more efficient. They'll be able to move faster, serve customers better, and scale without the proportional headcount that used to come with it. <strong>That's the opportunity we're here to help you capture.</strong></p>
 
-    <span class="caveat-aside">still have the original napkin somewhere</span>
+    <p>We're not consultants and we don't do strategy decks. We build agents, deploy them, and run them. The name is intentional — the best business decisions often start as a simple idea. Ours just happen to run on AI.</p>
+
+    <span class="caveat-aside">the napkin is still a valid planning tool, for what it's worth</span>
   </div>
 </div>
 
@@ -155,32 +142,13 @@
       <div class="value-item">
         <p class="value-num">06</p>
         <p class="value-title">We eat our own cooking</p>
-        <p class="value-desc">We run agents on our own products. If we wouldn't deploy something for ourselves, we won't deploy it for you. That keeps us honest.</p>
+        <p class="value-desc">We run agents ourselves. If we wouldn't deploy something for our own operations, we won't deploy it for yours. That keeps us honest and it keeps the bar high.</p>
       </div>
     </div>
   </div>
 </div>
 
-<!-- TEAM -->
-<div class="team-section">
-  <h2>Who builds this.</h2>
-  <p>Small team. Big surface area. We move fast because we keep it tight.</p>
-  <div class="team-grid">
-    <div class="team-card">
-      <div class="team-avatar">👤</div>
-      <p class="team-name">Founder</p>
-      <p class="team-role">Builder & Operator</p>
-      <p class="team-bio">Building products and the agents that run them. Started this because the infrastructure was more interesting than the apps. Obsessed with systems that run themselves.</p>
-      <span class="team-note">yes, we have an AI agent too</span>
-    </div>
-    <div class="team-card">
-      <div class="team-avatar">🤝</div>
-      <p class="team-name">Want to work with us?</p>
-      <p class="team-role">Open roles</p>
-      <p class="team-bio">We're early and selective. If you build things, think in systems, and want to work on problems that are genuinely interesting — get in touch. We'll figure it out from there.</p>
-    </div>
-  </div>
-</div>
+
 
 <section class="cta">
   <h2>Still reading?<br><span class="grad-text">Let's just talk.</span></h2>
