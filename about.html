@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About — Stack of Napkins</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;600&display=swap');
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #FFFFFF; --surface: #F6F5FC; --surface2: #EDEAF8;
+    --border: rgba(0,0,0,0.07); --border-hover: rgba(123,110,246,0.4);
+    --text: #0C0B1A; --muted: #6B6880; --muted2: #9996AA;
+    --accent: #7B6EF6; --accent-light: #A89FF8; --rust: #E8805A; --green: #3DC87A;
+  }
+  html { scroll-behavior: smooth; }
+  body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
+  nav {
+    position: sticky; top: 0; z-index: 200;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 0 56px; height: 60px;
+    background: rgba(255,255,255,0.9); backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+  }
+  .logo { font-size: 14px; font-weight: 600; color: var(--text); text-decoration: none; position: relative; }
+  .logo::after { content: ''; position: absolute; top: 50%; left: -18px; transform: translateY(-50%); width: 28px; height: 28px; border-radius: 50%; border: 1.5px solid rgba(123,110,246,0.18); pointer-events: none; }
+  .logo-accent { color: var(--accent); }
+  .nav-links { display: flex; list-style: none; gap: 28px; }
+  .nav-links a { font-size: 13px; font-weight: 400; color: var(--muted); text-decoration: none; transition: color 0.18s; }
+  .nav-links a:hover, .nav-links a.active { color: var(--text); }
+  .btn { display: inline-flex; align-items: center; padding: 8px 18px; border-radius: 7px; font-size: 13px; font-weight: 500; text-decoration: none; transition: all 0.18s; border: none; cursor: pointer; }
+  .btn-primary { background: var(--accent); color: #fff; box-shadow: 0 2px 16px rgba(123,110,246,0.28); }
+  .btn-primary:hover { background: #8B7EF8; transform: translateY(-1px); }
+  .btn-lg { padding: 13px 28px; font-size: 14px; border-radius: 9px; }
+  .btn-outline { background: transparent; color: var(--muted); border: 1px solid var(--border); }
+  .btn-outline:hover { color: var(--text); border-color: rgba(0,0,0,0.18); }
+  .grad-text { background: linear-gradient(135deg, var(--accent-light) 0%, var(--accent) 45%, var(--rust) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+
+  /* STORY */
+  .story { max-width: 780px; margin: 0 auto; padding: 100px 56px 80px; }
+  .eyebrow { font-size: 11px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--accent); margin-bottom: 24px; }
+  .story h1 { font-size: clamp(36px, 5vw, 56px); font-weight: 700; letter-spacing: -2px; line-height: 1.06; margin-bottom: 48px; }
+  .story-body { display: flex; flex-direction: column; gap: 24px; }
+  .story-body p { font-size: 17px; font-weight: 300; color: var(--muted); line-height: 1.85; }
+  .story-body p strong { color: var(--text); font-weight: 500; }
+  .story-body p em { font-style: italic; }
+  .pull-quote {
+    font-size: 22px; font-weight: 400; color: var(--text); line-height: 1.5;
+    border-left: 3px solid var(--accent); padding-left: 24px;
+    margin: 12px 0; letter-spacing: -0.3px;
+  }
+  .caveat-aside { font-family: 'Caveat', cursive; font-size: 17px; color: var(--rust); opacity: 0.6; display: block; transform: rotate(-1deg); margin-top: -8px; }
+
+  /* VALUES */
+  .values-section { border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); background: var(--surface); padding: 80px 56px; }
+  .values-inner { max-width: 1080px; margin: 0 auto; }
+  .values-inner h2 { font-size: clamp(28px, 4vw, 40px); font-weight: 700; letter-spacing: -1px; margin-bottom: 48px; }
+  .values-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
+  .value-item {}
+  .value-num { font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--accent); margin-bottom: 12px; }
+  .value-title { font-size: 16px; font-weight: 600; margin-bottom: 10px; letter-spacing: -0.2px; }
+  .value-desc { font-size: 14px; font-weight: 300; color: var(--muted); line-height: 1.75; }
+
+  /* TEAM */
+  .team-section { max-width: 1080px; margin: 0 auto; padding: 80px 56px; }
+  .team-section h2 { font-size: clamp(28px, 4vw, 40px); font-weight: 700; letter-spacing: -1px; margin-bottom: 12px; }
+  .team-section > p { font-size: 15px; font-weight: 300; color: var(--muted); margin-bottom: 48px; line-height: 1.7; max-width: 480px; }
+  .team-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+  .team-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 32px; }
+  .team-avatar {
+    width: 52px; height: 52px; border-radius: 12px;
+    background: linear-gradient(135deg, var(--accent-light), var(--rust));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px; margin-bottom: 16px;
+  }
+  .team-name { font-size: 16px; font-weight: 600; letter-spacing: -0.2px; margin-bottom: 4px; }
+  .team-role { font-size: 12px; font-weight: 500; color: var(--accent); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 12px; }
+  .team-bio { font-size: 14px; font-weight: 300; color: var(--muted); line-height: 1.7; }
+  .team-note { font-family: 'Caveat', cursive; font-size: 14px; color: var(--rust); opacity: 0.5; margin-top: 10px; display: block; transform: rotate(-1deg); }
+
+  .cta { text-align: center; padding: 120px 56px; }
+  .cta h2 { font-size: clamp(30px, 4vw, 52px); font-weight: 700; letter-spacing: -1.5px; line-height: 1.06; margin-bottom: 16px; }
+  .cta p { font-size: 16px; font-weight: 300; color: var(--muted); margin-bottom: 36px; }
+  .cta-actions { display: flex; justify-content: center; gap: 12px; }
+
+  footer { border-top: 1px solid var(--border); padding: 28px 56px; display: flex; justify-content: space-between; align-items: center; }
+  .footer-right { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; }
+  footer p { font-size: 12px; color: var(--muted2); }
+  .footer-joke { font-family: 'Caveat', cursive; font-size: 14px; color: var(--muted2); opacity: 0.5; }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="light.html" class="logo">Stack of <span class="logo-accent">Napkins</span></a>
+  <ul class="nav-links">
+    <li><a href="work.html">Work</a></li>
+    <li><a href="services.html">Services</a></li>
+    <li><a href="process.html">Process</a></li>
+    <li><a href="about.html" class="active">About</a></li>
+  </ul>
+  <a href="contact.html" class="btn btn-primary">Let's talk</a>
+</nav>
+
+<div class="story">
+  <p class="eyebrow">About</p>
+  <h1>We started this<br>on a <span class="grad-text">napkin.</span></h1>
+
+  <div class="story-body">
+    <p>That's actually true. Stack of Napkins came out of building our own products — a wellness app, a reputation management tool — and realizing that the most valuable thing we'd built wasn't the products themselves. <strong>It was the agents running them.</strong></p>
+
+    <p>The onboarding agent that handled 800+ signups without a single manual email. The review agent that monitored three platforms, drafted responses, and posted them — while we were doing other things. The briefing agent that told us what happened overnight so we didn't have to check.</p>
+
+    <blockquote class="pull-quote">"We built AI that ran our business. Then we realized we could build it for yours."</blockquote>
+
+    <p>Most businesses aren't missing a strategy. They're missing bandwidth. The same 20 tasks that eat half their week — the inbox management, the follow-ups, the review responses, the internal reporting — are exactly the kind of work an agent is good at. <strong>Repetitive, rule-based, time-consuming, and easy to forget.</strong></p>
+
+    <p>We're not an AI consultancy. We don't do strategy decks. We build agents, deploy them, and run them. The name is intentional — great ideas start on napkins. Ours just happen to run on AI.</p>
+
+    <span class="caveat-aside">still have the original napkin somewhere</span>
+  </div>
+</div>
+
+<!-- VALUES -->
+<div class="values-section">
+  <div class="values-inner">
+    <h2>How we work.</h2>
+    <div class="values-grid">
+      <div class="value-item">
+        <p class="value-num">01</p>
+        <p class="value-title">Build, don't consult</p>
+        <p class="value-desc">We don't sell strategy. We sell working agents. If we can't build it, we say so. If we can, we do it fast and show you something real.</p>
+      </div>
+      <div class="value-item">
+        <p class="value-num">02</p>
+        <p class="value-title">Earn autonomy over time</p>
+        <p class="value-desc">Agents start cautious. They escalate. They check. Over time, as they prove themselves, they earn more independence. We don't deploy and disappear.</p>
+      </div>
+      <div class="value-item">
+        <p class="value-num">03</p>
+        <p class="value-title">You stay in control</p>
+        <p class="value-desc">The agent works for your business. You approve what matters, override what doesn't feel right, and get briefed on everything. It's your name on the emails.</p>
+      </div>
+      <div class="value-item">
+        <p class="value-num">04</p>
+        <p class="value-title">Honest about what AI can't do</p>
+        <p class="value-desc">Some things need a human. We'll tell you which ones. An agent that tries to do everything usually does nothing well. Scope matters.</p>
+      </div>
+      <div class="value-item">
+        <p class="value-num">05</p>
+        <p class="value-title">Move fast, test first</p>
+        <p class="value-desc">Weeks, not months. But nothing goes live untested. We move quickly because we've done the work before — not because we're cutting corners.</p>
+      </div>
+      <div class="value-item">
+        <p class="value-num">06</p>
+        <p class="value-title">We eat our own cooking</p>
+        <p class="value-desc">We run agents on our own products. If we wouldn't deploy something for ourselves, we won't deploy it for you. That keeps us honest.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TEAM -->
+<div class="team-section">
+  <h2>Who builds this.</h2>
+  <p>Small team. Big surface area. We move fast because we keep it tight.</p>
+  <div class="team-grid">
+    <div class="team-card">
+      <div class="team-avatar">👤</div>
+      <p class="team-name">Founder</p>
+      <p class="team-role">Builder & Operator</p>
+      <p class="team-bio">Building products and the agents that run them. Started this because the infrastructure was more interesting than the apps. Obsessed with systems that run themselves.</p>
+      <span class="team-note">yes, we have an AI agent too</span>
+    </div>
+    <div class="team-card">
+      <div class="team-avatar">🤝</div>
+      <p class="team-name">Want to work with us?</p>
+      <p class="team-role">Open roles</p>
+      <p class="team-bio">We're early and selective. If you build things, think in systems, and want to work on problems that are genuinely interesting — get in touch. We'll figure it out from there.</p>
+    </div>
+  </div>
+</div>
+
+<section class="cta">
+  <h2>Still reading?<br><span class="grad-text">Let's just talk.</span></h2>
+  <p>One call. We'll figure out if there's something worth building.</p>
+  <div class="cta-actions">
+    <a href="contact.html" class="btn btn-primary btn-lg">Let's talk</a>
+    <a href="work.html" class="btn btn-outline btn-lg">See our work</a>
+  </div>
+</section>
+
+<footer>
+  <a href="light.html" class="logo">Stack of <span class="logo-accent">Napkins</span></a>
+  <div class="footer-right">
+    <p>© 2026 Stack of Napkins. All rights reserved.</p>
+    <span class="footer-joke">we're hiring humans too (just not for ops)</span>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Process — Stack of Napkins</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;600&display=swap');
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #FFFFFF; --surface: #F6F5FC; --surface2: #EDEAF8;
+    --border: rgba(0,0,0,0.07); --border-hover: rgba(123,110,246,0.4);
+    --text: #0C0B1A; --muted: #6B6880; --muted2: #9996AA;
+    --accent: #7B6EF6; --accent-light: #A89FF8; --rust: #E8805A; --green: #3DC87A;
+  }
+  html { scroll-behavior: smooth; }
+  body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
+  nav {
+    position: sticky; top: 0; z-index: 200;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 0 56px; height: 60px;
+    background: rgba(255,255,255,0.9); backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+  }
+  .logo { font-size: 14px; font-weight: 600; color: var(--text); text-decoration: none; position: relative; }
+  .logo::after { content: ''; position: absolute; top: 50%; left: -18px; transform: translateY(-50%); width: 28px; height: 28px; border-radius: 50%; border: 1.5px solid rgba(123,110,246,0.18); pointer-events: none; }
+  .logo-accent { color: var(--accent); }
+  .nav-links { display: flex; list-style: none; gap: 28px; }
+  .nav-links a { font-size: 13px; font-weight: 400; color: var(--muted); text-decoration: none; transition: color 0.18s; }
+  .nav-links a:hover, .nav-links a.active { color: var(--text); }
+  .btn { display: inline-flex; align-items: center; padding: 8px 18px; border-radius: 7px; font-size: 13px; font-weight: 500; text-decoration: none; transition: all 0.18s; border: none; cursor: pointer; }
+  .btn-primary { background: var(--accent); color: #fff; box-shadow: 0 2px 16px rgba(123,110,246,0.28); }
+  .btn-primary:hover { background: #8B7EF8; transform: translateY(-1px); }
+  .btn-lg { padding: 13px 28px; font-size: 14px; border-radius: 9px; }
+  .btn-outline { background: transparent; color: var(--muted); border: 1px solid var(--border); }
+  .btn-outline:hover { color: var(--text); border-color: rgba(0,0,0,0.18); }
+  .grad-text { background: linear-gradient(135deg, var(--accent-light) 0%, var(--accent) 45%, var(--rust) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+
+  .page-header { max-width: 1080px; margin: 0 auto; padding: 80px 56px 60px; border-bottom: 1px solid var(--border); }
+  .eyebrow { font-size: 11px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--accent); margin-bottom: 16px; }
+  .page-header h1 { font-size: clamp(36px, 5vw, 56px); font-weight: 700; letter-spacing: -2px; line-height: 1.06; margin-bottom: 16px; max-width: 640px; }
+  .page-header p { font-size: 16px; font-weight: 300; color: var(--muted); line-height: 1.75; max-width: 520px; }
+
+  /* TIMELINE */
+  .timeline { max-width: 1080px; margin: 0 auto; padding: 80px 56px; display: flex; flex-direction: column; gap: 0; }
+
+  .phase {
+    display: grid; grid-template-columns: 200px 1fr;
+    gap: 64px; padding: 60px 0;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+  }
+  .phase:last-child { border-bottom: none; }
+
+  .phase-label { position: sticky; top: 80px; }
+  .phase-num { font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--accent); margin-bottom: 10px; }
+  .phase-name { font-size: 20px; font-weight: 700; letter-spacing: -0.4px; margin-bottom: 8px; }
+  .phase-time { font-size: 12px; color: var(--muted2); font-style: italic; }
+
+  .phase-content { display: flex; flex-direction: column; gap: 28px; }
+  .phase-desc { font-size: 16px; font-weight: 300; color: var(--muted); line-height: 1.8; }
+
+  .phase-steps { display: flex; flex-direction: column; gap: 16px; }
+  .phase-step {
+    display: flex; gap: 16px; align-items: flex-start;
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 10px; padding: 18px 20px;
+  }
+  .step-num-sm { font-size: 11px; font-weight: 700; color: var(--accent); flex-shrink: 0; margin-top: 2px; min-width: 20px; }
+  .step-body {}
+  .step-title { font-size: 14px; font-weight: 600; margin-bottom: 4px; }
+  .step-detail { font-size: 13px; font-weight: 300; color: var(--muted); line-height: 1.6; }
+
+  .phase-note { font-family: 'Caveat', cursive; font-size: 15px; color: var(--rust); opacity: 0.55; transform: rotate(-1deg); display: block; }
+
+  .phase-output {
+    background: rgba(123,110,246,0.04); border: 1px solid rgba(123,110,246,0.15);
+    border-radius: 10px; padding: 20px 24px;
+  }
+  .output-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.8px; color: var(--accent); margin-bottom: 8px; }
+  .output-text { font-size: 14px; color: var(--text); line-height: 1.65; font-weight: 300; }
+
+  /* FAQ */
+  .faq-section { background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 80px 56px; }
+  .faq-inner { max-width: 1080px; margin: 0 auto; }
+  .faq-inner h2 { font-size: clamp(28px, 4vw, 40px); font-weight: 700; letter-spacing: -1px; margin-bottom: 48px; }
+  .faq-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+  .faq-item {}
+  .faq-q { font-size: 15px; font-weight: 600; margin-bottom: 10px; letter-spacing: -0.2px; }
+  .faq-a { font-size: 14px; font-weight: 300; color: var(--muted); line-height: 1.75; }
+
+  .cta { text-align: center; padding: 120px 56px; }
+  .cta h2 { font-size: clamp(30px, 4vw, 52px); font-weight: 700; letter-spacing: -1.5px; line-height: 1.06; margin-bottom: 16px; }
+  .cta p { font-size: 16px; font-weight: 300; color: var(--muted); margin-bottom: 36px; }
+  .cta-actions { display: flex; justify-content: center; gap: 12px; }
+
+  footer { border-top: 1px solid var(--border); padding: 28px 56px; display: flex; justify-content: space-between; align-items: center; }
+  .footer-right { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; }
+  footer p { font-size: 12px; color: var(--muted2); }
+  .footer-joke { font-family: 'Caveat', cursive; font-size: 14px; color: var(--muted2); opacity: 0.5; }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="light.html" class="logo">Stack of <span class="logo-accent">Napkins</span></a>
+  <ul class="nav-links">
+    <li><a href="work.html">Work</a></li>
+    <li><a href="services.html">Services</a></li>
+    <li><a href="process.html" class="active">Process</a></li>
+    <li><a href="about.html">About</a></li>
+  </ul>
+  <a href="contact.html" class="btn btn-primary">Let's talk</a>
+</nav>
+
+<div class="page-header">
+  <p class="eyebrow">How it works</p>
+  <h1>From napkin to<br><span class="grad-text">running in weeks.</span></h1>
+  <p>No discovery decks. No six-month timelines. One call and we know enough to build. Here's exactly what happens.</p>
+</div>
+
+<div class="timeline">
+
+  <div class="phase">
+    <div class="phase-label">
+      <p class="phase-num">Phase 01</p>
+      <h2 class="phase-name">Scope</h2>
+      <p class="phase-time">Week 1 — ~1 hour of your time</p>
+    </div>
+    <div class="phase-content">
+      <p class="phase-desc">One call. We ask about your operations — what takes time, what gets missed, what you've tried already. You don't need to have it figured out. We find the leverage points.</p>
+      <div class="phase-steps">
+        <div class="phase-step">
+          <span class="step-num-sm">1.1</span>
+          <div class="step-body">
+            <p class="step-title">Discovery call</p>
+            <p class="step-detail">45–60 minutes. We map your workflows, find what's manual, and identify what an agent could own. You talk, we listen and ask dumb questions on purpose.</p>
+          </div>
+        </div>
+        <div class="phase-step">
+          <span class="step-num-sm">1.2</span>
+          <div class="step-body">
+            <p class="step-title">Scope doc</p>
+            <p class="step-detail">We write up exactly what the agent will do, what tools it needs access to, and what success looks like. You approve it or push back. Nothing gets built until we agree.</p>
+          </div>
+        </div>
+      </div>
+      <div class="phase-output">
+        <p class="output-label">Output</p>
+        <p class="output-text">A clear scope document. What the agent does, what it doesn't, how we'll know it's working.</p>
+      </div>
+      <span class="phase-note">most clients say this call alone was worth it</span>
+    </div>
+  </div>
+
+  <div class="phase">
+    <div class="phase-label">
+      <p class="phase-num">Phase 02</p>
+      <h2 class="phase-name">Build</h2>
+      <p class="phase-time">Weeks 1–2 — minimal input needed</p>
+    </div>
+    <div class="phase-content">
+      <p class="phase-desc">We build. You don't need to be involved much here. We'll ask a few questions, get access to the tools it needs, and send you progress updates. The goal is a working agent in under two weeks.</p>
+      <div class="phase-steps">
+        <div class="phase-step">
+          <span class="step-num-sm">2.1</span>
+          <div class="step-body">
+            <p class="step-title">Agent architecture</p>
+            <p class="step-detail">We decide how the agent is structured — what it reads, what it writes, how it makes decisions. Custom for your use case, not a template with your logo on it.</p>
+          </div>
+        </div>
+        <div class="phase-step">
+          <span class="step-num-sm">2.2</span>
+          <div class="step-body">
+            <p class="step-title">Integration setup</p>
+            <p class="step-detail">We connect the agent to your tools — your inbox, CRM, review platforms, internal systems. We handle the plumbing. You hand over credentials once.</p>
+          </div>
+        </div>
+        <div class="phase-step">
+          <span class="step-num-sm">2.3</span>
+          <div class="step-body">
+            <p class="step-title">Voice and tone training</p>
+            <p class="step-detail">If the agent writes or responds on your behalf, we train it on your voice. Feed it examples of your writing. It learns to sound like you, not a support bot.</p>
+          </div>
+        </div>
+      </div>
+      <div class="phase-output">
+        <p class="output-label">Output</p>
+        <p class="output-text">A working agent in a test environment. You see it do the job before it goes live.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="phase">
+    <div class="phase-label">
+      <p class="phase-num">Phase 03</p>
+      <h2 class="phase-name">Test</h2>
+      <p class="phase-time">Week 2–3 — a few hours of review</p>
+    </div>
+    <div class="phase-content">
+      <p class="phase-desc">Before anything goes live, you see it work. Real inputs, real outputs, real edge cases. We run it against your actual data in a safe environment and fix what's off.</p>
+      <div class="phase-steps">
+        <div class="phase-step">
+          <span class="step-num-sm">3.1</span>
+          <div class="step-body">
+            <p class="step-title">Staged testing</p>
+            <p class="step-detail">You throw real scenarios at it. We watch what happens. The goal is to find the three weird edge cases before your customers do.</p>
+          </div>
+        </div>
+        <div class="phase-step">
+          <span class="step-num-sm">3.2</span>
+          <div class="step-body">
+            <p class="step-title">Your sign-off</p>
+            <p class="step-detail">Nothing deploys without you saying yes. You approve the behavior, the outputs, the escalation logic. It's your business — you stay in control.</p>
+          </div>
+        </div>
+      </div>
+      <div class="phase-output">
+        <p class="output-label">Output</p>
+        <p class="output-text">A tested, approved agent ready for production. And confidence it won't embarrass you on day one.</p>
+      </div>
+      <span class="phase-note">this is where most clients get excited</span>
+    </div>
+  </div>
+
+  <div class="phase">
+    <div class="phase-label">
+      <p class="phase-num">Phase 04</p>
+      <h2 class="phase-name">Deploy & Run</h2>
+      <p class="phase-time">Week 3 onwards — you mostly just get briefed</p>
+    </div>
+    <div class="phase-content">
+      <p class="phase-desc">The agent goes live. We monitor it, handle issues, and improve it over time. You get a brief — daily or weekly, your call — on what it did. You step in when you want to, not because you have to.</p>
+      <div class="phase-steps">
+        <div class="phase-step">
+          <span class="step-num-sm">4.1</span>
+          <div class="step-body">
+            <p class="step-title">Production deployment</p>
+            <p class="step-detail">Live. Running. Handling the real thing. We stay close for the first week to catch anything unexpected.</p>
+          </div>
+        </div>
+        <div class="phase-step">
+          <span class="step-num-sm">4.2</span>
+          <div class="step-body">
+            <p class="step-title">Ongoing monitoring</p>
+            <p class="step-detail">We watch performance, catch failures, and make improvements. On retainer, we run regular cycles to expand what the agent can do.</p>
+          </div>
+        </div>
+        <div class="phase-step">
+          <span class="step-num-sm">4.3</span>
+          <div class="step-body">
+            <p class="step-title">Regular briefs to you</p>
+            <p class="step-detail">What it did, what it flagged, where it struggled. You stay informed without being in the weeds.</p>
+          </div>
+        </div>
+      </div>
+      <div class="phase-output">
+        <p class="output-label">Output</p>
+        <p class="output-text">An agent running your ops. You doing other things.</p>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- FAQ -->
+<div class="faq-section">
+  <div class="faq-inner">
+    <h2>Questions people<br>actually ask.</h2>
+    <div class="faq-grid">
+      <div class="faq-item">
+        <p class="faq-q">How much of my time does this take?</p>
+        <p class="faq-a">About 2–3 hours total during the build. One scoping call, a review of the scope doc, and a sign-off before launch. After that, you mostly just read the briefs.</p>
+      </div>
+      <div class="faq-item">
+        <p class="faq-q">What if the agent makes a mistake?</p>
+        <p class="faq-a">It will, at some point. That's why we build escalation rules — anything it's uncertain about goes to you first. We also monitor and fix issues as they come up. The goal is to earn autonomy over time, not assume it on day one.</p>
+      </div>
+      <div class="faq-item">
+        <p class="faq-q">Do I need technical knowledge?</p>
+        <p class="faq-a">No. You describe what you need. We handle the rest. If you can explain what you're tired of doing, we can probably automate it.</p>
+      </div>
+      <div class="faq-item">
+        <p class="faq-q">What tools does it work with?</p>
+        <p class="faq-a">Most things with an API or email access. Gmail, Slack, Notion, HubSpot, Airtable, Google Business, Stripe, Shopify — we've connected agents to most of the common ones. If you use something niche, ask.</p>
+      </div>
+      <div class="faq-item">
+        <p class="faq-q">What happens if I want to change it later?</p>
+        <p class="faq-a">You can. On retainer, changes are part of the deal. On one-time builds, we can scope an update. Agents aren't static — they get better over time if you let them.</p>
+      </div>
+      <div class="faq-item">
+        <p class="faq-q">Is this really 3 weeks?</p>
+        <p class="faq-a">For a focused, single-use-case build — yes. More complex builds take longer. We'll tell you honestly during scoping. We'd rather under-promise and ship early than the other way around.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section class="cta">
+  <h2>What are you still<br><span class="grad-text">doing manually?</span></h2>
+  <p>One call is all it takes to find out if we can fix it.</p>
+  <div class="cta-actions">
+    <a href="contact.html" class="btn btn-primary btn-lg">Let's talk</a>
+    <a href="services.html" class="btn btn-outline btn-lg">See services</a>
+  </div>
+</section>
+
+<footer>
+  <a href="light.html" class="logo">Stack of <span class="logo-accent">Napkins</span></a>
+  <div class="footer-right">
+    <p>© 2026 Stack of Napkins. All rights reserved.</p>
+    <span class="footer-joke">we're hiring humans too (just not for ops)</span>
+  </div>
+</footer>
+
+</body>
+</html>
