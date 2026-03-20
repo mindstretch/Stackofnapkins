@@ -15,56 +15,81 @@
     --accent: #7B6EF6; --accent-light: #A89FF8; --rust: #E8805A; --green: #3DC87A;
   }
   html { scroll-behavior: smooth; }
-  body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
+  body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; position: relative; }
   nav {
     position: sticky; top: 0; z-index: 200;
     display: flex; justify-content: space-between; align-items: center;
-    padding: 0 56px; height: 60px;
+    padding: 0 56px; height: 64px;
     background: rgba(255,255,255,0.9); backdrop-filter: blur(20px);
     border-bottom: 1px solid var(--border);
   }
-  .logo { font-size: 14px; font-weight: 600; color: var(--text); text-decoration: none; position: relative; }
-  .logo::after { content: ''; position: absolute; top: 50%; left: -18px; transform: translateY(-50%); width: 28px; height: 28px; border-radius: 50%; border: 1.5px solid rgba(123,110,246,0.18); pointer-events: none; }
+  .logo {
+    font-size: 14px; font-weight: 600; color: var(--text); text-decoration: none;
+    position: relative; padding-left: 24px;
+  }
+  .logo::before {
+    content: ''; position: absolute; top: 50%; left: 0;
+    transform: translateY(-50%); width: 16px; height: 16px;
+    border-radius: 50%; border: 1.5px solid rgba(123,110,246,0.22);
+    box-shadow: inset 0 0 0 2px rgba(123,110,246,0.06); pointer-events: none;
+  }
+  .logo::after {
+    content: ''; position: absolute; top: 50%; left: 5px;
+    transform: translateY(-38%); width: 14px; height: 14px;
+    border-radius: 50%; border: 1px solid rgba(232,128,90,0.15); pointer-events: none;
+  }
   .logo-accent { color: var(--accent); }
   .nav-links { display: flex; list-style: none; gap: 28px; }
   .nav-links a { font-size: 13px; font-weight: 400; color: var(--muted); text-decoration: none; transition: color 0.18s; }
   .nav-links a:hover, .nav-links a.active { color: var(--text); }
-  .btn { display: inline-flex; align-items: center; padding: 8px 18px; border-radius: 7px; font-size: 13px; font-weight: 500; text-decoration: none; transition: all 0.18s; border: none; cursor: pointer; }
-  .btn-primary { background: var(--accent); color: #fff; box-shadow: 0 2px 16px rgba(123,110,246,0.28); }
+  .btn { display: inline-flex; align-items: center; padding: 8px 18px; border-radius: 7px; font-size: 13px; font-weight: 500; text-decoration: none; transition: all 0.18s; border: none; cursor: pointer; outline: none; }
+  .btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+  .btn-primary { background: var(--accent); color: #fff; box-shadow: 0 2px 14px rgba(123,110,246,0.3); }
   .btn-primary:hover { background: #8B7EF8; transform: translateY(-1px); }
   .btn-lg { padding: 13px 28px; font-size: 14px; border-radius: 9px; }
-  .btn-outline { background: transparent; color: var(--muted); border: 1px solid var(--border); }
+  .btn-outline { background: transparent; color: var(--muted); border: 1px solid rgba(0,0,0,0.12); }
   .btn-outline:hover { color: var(--text); border-color: rgba(0,0,0,0.18); }
   .grad-text { background: linear-gradient(135deg, var(--accent-light) 0%, var(--accent) 45%, var(--rust) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
 
   /* STORY */
-  .story { max-width: 780px; margin: 0 auto; padding: 100px 56px 80px; }
+  .story { max-width: 780px; margin: 0 auto; padding: 110px 56px 90px; position: relative; overflow: visible; }
   .eyebrow { font-size: 11px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--accent); margin-bottom: 24px; }
-  .story h1 { font-size: clamp(36px, 5vw, 56px); font-weight: 700; letter-spacing: -2px; line-height: 1.06; margin-bottom: 48px; }
-  .story-body { display: flex; flex-direction: column; gap: 24px; }
-  .story-body p { font-size: 17px; font-weight: 300; color: var(--muted); line-height: 1.85; }
+  .story h1 { font-size: clamp(38px, 5vw, 58px); font-weight: 700; letter-spacing: -2.2px; line-height: 1.04; margin-bottom: 52px; }
+  .story-body { display: flex; flex-direction: column; gap: 28px; }
+  .story-body p { font-size: 17px; font-weight: 300; color: var(--muted); line-height: 1.9; }
   .story-body p strong { color: var(--text); font-weight: 500; }
   .story-body p em { font-style: italic; }
   .pull-quote {
-    font-size: 22px; font-weight: 400; color: var(--text); line-height: 1.5;
-    border-left: 3px solid var(--accent); padding-left: 24px;
-    margin: 12px 0; letter-spacing: -0.3px;
+    font-size: 24px; font-weight: 400; color: var(--text); line-height: 1.5;
+    border-left: 4px solid var(--accent); padding-left: 28px;
+    margin: 8px 0 4px; letter-spacing: -0.4px;
   }
-  .caveat-aside { font-family: 'Caveat', cursive; font-size: 17px; color: var(--rust); opacity: 0.6; display: block; transform: rotate(-1deg); margin-top: -8px; }
+  .caveat-aside { font-family: 'Caveat', cursive; font-size: 17px; color: var(--rust); opacity: 0.6; display: block; transform: rotate(-1deg); margin-top: 4px; padding-left: 4px; }
 
   /* VALUES */
   .values-section { border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); background: var(--surface); padding: 80px 56px; }
   .values-inner { max-width: 1080px; margin: 0 auto; }
-  .values-inner h2 { font-size: clamp(28px, 4vw, 40px); font-weight: 700; letter-spacing: -1px; margin-bottom: 48px; }
-  .values-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
-  .value-item {}
-  .value-num { font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--accent); margin-bottom: 12px; }
-  .value-title { font-size: 16px; font-weight: 600; margin-bottom: 10px; letter-spacing: -0.2px; }
-  .value-desc { font-size: 14px; font-weight: 300; color: var(--muted); line-height: 1.75; }
+  .values-inner h2 { font-size: clamp(30px, 4vw, 42px); font-weight: 700; letter-spacing: -1.2px; margin-bottom: 52px; line-height: 1.1; }
+  .values-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0 40px; }
+  .value-item { border-top: 1px solid var(--border); padding-top: 28px; padding-bottom: 28px; }
+  .value-num { font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--accent); margin-bottom: 14px; opacity: 0.8; }
+  .value-title { font-size: 17px; font-weight: 600; margin-bottom: 12px; letter-spacing: -0.3px; line-height: 1.3; }
+  .value-desc { font-size: 14px; font-weight: 300; color: var(--muted); line-height: 1.8; }
 
 
 
-  .cta { text-align: center; padding: 120px 56px; }
+  .cta { text-align: center; padding: 140px 56px; position: relative; overflow: hidden; }
+  .cta::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image: repeating-linear-gradient(transparent, transparent 27px, rgba(123,110,246,0.04) 27px, rgba(123,110,246,0.04) 28px);
+    pointer-events: none;
+    mask-image: radial-gradient(ellipse 70% 80% at 50% 50%, black 20%, transparent 80%);
+    -webkit-mask-image: radial-gradient(ellipse 70% 80% at 50% 50%, black 20%, transparent 80%);
+  }
+  .cta h2 { position: relative; z-index: 1; }
+  .cta p { position: relative; z-index: 1; }
+  .cta-actions { position: relative; z-index: 1; }
   .cta h2 { font-size: clamp(30px, 4vw, 52px); font-weight: 700; letter-spacing: -1.5px; line-height: 1.06; margin-bottom: 16px; }
   .cta p { font-size: 16px; font-weight: 300; color: var(--muted); margin-bottom: 36px; }
   .cta-actions { display: flex; justify-content: center; gap: 12px; }
@@ -73,6 +98,8 @@
   .footer-right { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; }
   footer p { font-size: 12px; color: var(--muted2); }
   .footer-joke { font-family: 'Caveat', cursive; font-size: 14px; color: var(--muted2); opacity: 0.5; }
+  /* COFFEE RING */
+  .coffee-ring { position: absolute; pointer-events: none; mix-blend-mode: multiply; user-select: none; z-index: 0; }
 </style>
 </head>
 <body>
@@ -105,7 +132,8 @@
 
     <p>We're not consultants and we don't do strategy decks. We build agents, deploy them, and run them. The name is intentional — the best business decisions often start as a simple idea. Ours just happen to run on AI.</p>
 
-    <span class="caveat-aside">the napkin is still a valid planning tool, for what it's worth</span>
+    <span class="caveat-aside">↗ the napkin is still a valid planning tool, for what it's worth</span>
+  <img class="coffee-ring" src="coffee-ring.png" style="width:180px;top:580px;right:-30px;opacity:0.36;transform:rotate(15deg);" alt="" aria-hidden="true">
   </div>
 </div>
 
