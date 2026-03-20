@@ -170,7 +170,6 @@
 
   @media (max-width: 768px) {
     nav { padding: 0 20px; height: 56px; }
-    .nav-links { display: none; }
 
     .page-header { padding: 48px 20px 36px; }
     .page-header h1 { font-size: clamp(28px, 8vw, 42px); letter-spacing: -1px; }
@@ -196,6 +195,79 @@
     footer { padding: 24px 20px; flex-direction: column; gap: 12px; text-align: center; }
     .footer-right { align-items: center; }
   }
+
+  /* ── HAMBURGER NAV ── */
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    padding: 4px;
+    background: none;
+    border: none;
+    z-index: 300;
+  }
+  .hamburger span {
+    display: block;
+    width: 22px;
+    height: 2px;
+    background: var(--text);
+    border-radius: 2px;
+    transition: all 0.25s;
+  }
+  .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .hamburger.open span:nth-child(2) { opacity: 0; }
+  .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  .mobile-menu {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(255,255,255,0.98);
+    backdrop-filter: blur(12px);
+    z-index: 500;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 40px 32px;
+    gap: 8px;
+  }
+  .mobile-menu.open { display: flex; }
+  .mobile-menu a {
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: -1px;
+    color: var(--text);
+    text-decoration: none;
+    padding: 10px 0;
+    transition: color 0.15s;
+    line-height: 1;
+  }
+  .mobile-menu a:hover { color: var(--accent); }
+  .mobile-menu .menu-cta {
+    margin-top: 24px;
+    background: var(--accent);
+    color: #fff;
+    padding: 14px 28px;
+    border-radius: 9px;
+    font-size: 16px;
+    font-weight: 500;
+    letter-spacing: -0.2px;
+    box-shadow: 0 2px 16px rgba(123,110,246,0.28);
+  }
+  .mobile-menu .menu-note {
+    font-family: 'Caveat', cursive;
+    font-size: 15px;
+    color: var(--muted2);
+    opacity: 0.5;
+    margin-top: 24px;
+  }
+
+  @media (max-width: 768px) {
+    .hamburger { display: flex; }
+    .nav-cta-desktop { display: none; }
+  }
+
 </style>
 </head>
 <body>
@@ -208,8 +280,22 @@
     <li><a href="/process">Process</a></li>
     <li><a href="/about">About</a></li>
   </ul>
-  <a href="/contact" href="/contact" class="btn btn-primary">Let's talk</a>
+  <a href="/contact" class="btn btn-primary nav-cta-desktop">Let's talk</a>
+  <button class="hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="/">Home</a>
+  <a href="/work">Work</a>
+  <a href="/services">Services</a>
+  <a href="/process">Process</a>
+  <a href="/about">About</a>
+  <a href="/contact" class="menu-cta">Let's talk</a>
+  <span class="menu-note">we respond faster than you'd expect</span>
+</div>
+
 
 <div class="page-header">
   <img class="coffee-ring" src="coffee-ring.png" style="width:280px;top:40px;right:-60px;opacity:0.42;transform:rotate(12deg);" alt="" aria-hidden="true">
@@ -418,5 +504,21 @@
   </div>
 </footer>
 
+<script>
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobileMenu');
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('open');
+    mobileMenu.classList.toggle('open');
+    document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
+  });
+  mobileMenu.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => {
+      hamburger.classList.remove('open');
+      mobileMenu.classList.remove('open');
+      document.body.style.overflow = '';
+    });
+  });
+</script>
 </body>
 </html>
