@@ -135,6 +135,7 @@
   footer p { font-size: 12px; color: var(--muted2); }
   .footer-joke { font-family: 'Caveat', cursive; font-size: 14px; color: var(--muted2); opacity: 0.5; }
 </style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
 
@@ -181,7 +182,7 @@
   </div>
 
   <!-- FORM -->
-  <form class="contact-form" onsubmit="return false;">
+  <form class="contact-form" id="contactForm">
     <div class="field-row">
       <div class="field">
         <label>First name</label>
@@ -221,8 +222,8 @@
       <textarea placeholder="What's taking your time? What have you tried? What does success look like? The more specific, the better — but don't overthink it."></textarea>
     </div>
 
-    <button type="submit" class="submit-btn">Send it →</button>
-    <p class="form-note">We'll respond within 24 hours. Usually faster.</p>
+    <button type="submit" class="submit-btn" id="submitBtn">Send it →</button>
+    <p class="form-note" id="formNote">We'll respond within 24 hours. Usually faster.</p>
   </form>
 
 </div>
@@ -241,5 +242,47 @@
   </div>
 </footer>
 
+<script>
+  const { createClient } = supabase;
+  const sb = createClient(
+    'https://hqnhovkfofbxfqtftewa.supabase.co',
+    'sb_publishable_tKxwigOEVQoEt1DgKZaxPg_jb6Vkaey'
+  );
+
+  document.getElementById('contactForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const btn = document.getElementById('submitBtn');
+    const note = document.getElementById('formNote');
+    const form = e.target;
+
+    btn.textContent = 'Sending...';
+    btn.disabled = true;
+
+    const fields = form.querySelectorAll('input, textarea, select');
+    const data = {};
+    fields.forEach(f => { if (f.name) data[f.name] = f.value; });
+
+    const { error } = await sb.from('contact_submissions').insert([{
+      first_name: form.querySelector('[placeholder="Alex"]')?.value || '',
+      last_name: form.querySelector('[placeholder="Chen"]')?.value || '',
+      email: form.querySelector('[type="email"]')?.value || '',
+      company: form.querySelector('[placeholder="Your company name"]')?.value || '',
+      use_case: form.querySelector('select')?.value || '',
+      message: form.querySelector('textarea')?.value || ''
+    }]);
+
+    if (error) {
+      btn.textContent = 'Something went wrong — try emailing us directly';
+      btn.style.background = '#E8805A';
+      btn.disabled = false;
+      console.error(error);
+    } else {
+      btn.textContent = "We got it. You'll hear from us soon. ✓";
+      btn.style.background = '#3DC87A';
+      note.textContent = 'Usually same day.';
+      form.querySelectorAll('input, textarea, select').forEach(f => f.disabled = true);
+    }
+  });
+</script>
 </body>
 </html>
