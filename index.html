@@ -26,7 +26,8 @@
     --green: #3DC87A;
   }
 
-  html { scroll-behavior: smooth; }
+  html { scroll-behavior: smooth; overflow-x: hidden; }
+  *, *::before, *::after { max-width: 100%; }
   body {
     background: var(--bg);
     color: var(--text);
@@ -163,7 +164,7 @@
     position: absolute;
     top: -120px; left: 50%;
     transform: translateX(-50%);
-    width: 900px; height: 600px;
+    width: min(900px, 100vw); height: 600px;
     background: radial-gradient(ellipse at 50% 30%, rgba(123,110,246,0.11) 0%, rgba(123,110,246,0.04) 40%, transparent 70%);
     border-radius: 50%;
   }
@@ -171,7 +172,7 @@
     content: '';
     position: absolute;
     top: 60px; right: 8%;
-    width: 360px; height: 360px;
+    width: min(360px, 80vw); height: min(360px, 80vw);
     background: radial-gradient(ellipse, rgba(232,128,90,0.08) 0%, transparent 65%);
     border-radius: 50%;
     filter: blur(30px);
@@ -302,6 +303,7 @@
   }
 
   .dashboard {
+    overflow-x: auto;
     border-radius: 18px;
     overflow: hidden;
     border: 1px solid rgba(0,0,0,0.08);
@@ -815,7 +817,7 @@
     position: absolute;
     top: 30%; left: 50%;
     transform: translate(-50%, -50%);
-    width: 700px; height: 500px;
+    width: min(700px, 100vw); height: 500px;
     background: radial-gradient(ellipse, rgba(123,110,246,0.08) 0%, transparent 65%);
     pointer-events: none;
   }
@@ -911,6 +913,16 @@
   /* ── MOBILE FIRST ── */
   @media (max-width: 768px) {
     .coffee-ring { display: none; }
+    html, body { overflow-x: hidden; width: 100%; }
+    .hero { overflow: hidden; }
+    .glow { display: none; }
+    .dashboard { max-width: calc(100vw - 40px); overflow-x: auto; }
+    .db-metrics { grid-template-columns: 1fr 1fr; min-width: unset; }
+    .db-row { flex-wrap: wrap; }
+    .section { overflow: hidden; }
+    .cards-grid { grid-template-columns: 1fr !important; width: 100%; }
+    .card { width: 100%; min-width: 0; box-sizing: border-box; }
+    .card h3, .card p { word-break: normal; overflow-wrap: break-word; white-space: normal; }
 
     nav {
       padding: 0 20px;
@@ -928,7 +940,8 @@
     .hero-actions { flex-direction: column; align-items: flex-start; gap: 10px; margin-bottom: 40px; }
     .btn-lg { padding: 13px 24px; font-size: 14px; width: 100%; justify-content: center; }
 
-    .dashboard { border-radius: 12px; }
+    .dashboard {
+    overflow-x: auto; border-radius: 12px; }
     .db-metrics { grid-template-columns: 1fr 1fr; }
     .db-metric { padding: 14px 16px; }
     .db-metric-val { font-size: 20px; }
@@ -1053,7 +1066,7 @@
 
 <!-- Ring 1: Hero top-right — the double ring, large, partially off-edge -->
 <img class="coffee-ring" src="coffee-ring.png"
-  style="width:420px; top:30px; right:-100px; transform:rotate(18deg);"
+  style="width:420px; top:30px; right:-100px; transform:rotate(18deg); pointer-events:none;"
   alt="" aria-hidden="true">
 
 <!-- Ring 2: Services section left — single ring feel, crop with overflow:hidden parent -->
