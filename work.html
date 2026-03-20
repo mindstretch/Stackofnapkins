@@ -463,6 +463,122 @@
   </div>
 </div>
 
+<style>
+  /* ── INDUSTRIES ── */
+  .industries {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 0 56px 100px;
+  }
+  .industries-header {
+    margin-bottom: 48px;
+  }
+  .industries-header h2 {
+    font-size: clamp(26px, 3.5vw, 38px);
+    font-weight: 700;
+    letter-spacing: -1.2px;
+    line-height: 1.08;
+    margin-bottom: 12px;
+  }
+  .industries-header p {
+    font-size: 15px;
+    font-weight: 300;
+    color: var(--muted);
+    line-height: 1.75;
+    max-width: 520px;
+  }
+  .industry-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+  }
+  .industry-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 28px 26px 24px;
+    transition: border-color 0.2s, transform 0.22s, box-shadow 0.22s;
+    position: relative;
+    overflow: hidden;
+  }
+  .industry-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent 0%, var(--accent) 50%, transparent 100%);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .industry-card:hover {
+    border-color: rgba(123,110,246,0.3);
+    transform: translateY(-3px);
+    box-shadow: 0 14px 36px rgba(123,110,246,0.08), 0 4px 12px rgba(0,0,0,0.04);
+  }
+  .industry-card:hover::before { opacity: 1; }
+  .industry-ico {
+    font-size: 22px;
+    margin-bottom: 14px;
+    display: block;
+  }
+  .industry-name {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 8px;
+  }
+  .industry-card h3 {
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: -0.3px;
+    line-height: 1.3;
+    margin-bottom: 10px;
+  }
+  .industry-card p {
+    font-size: 13px;
+    font-weight: 300;
+    color: var(--muted);
+    line-height: 1.75;
+    margin-bottom: 16px;
+  }
+  .industry-tasks {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .industry-task {
+    font-size: 12px;
+    color: var(--muted);
+    display: flex;
+    align-items: baseline;
+    gap: 7px;
+    line-height: 1.5;
+  }
+  .industry-task::before {
+    content: '→';
+    color: var(--accent);
+    opacity: 0.6;
+    flex-shrink: 0;
+    font-size: 11px;
+  }
+  .industry-note {
+    font-family: 'Caveat', cursive;
+    font-size: 13px;
+    color: var(--rust);
+    opacity: 0.6;
+    margin-top: 14px;
+    display: block;
+    transform: rotate(-0.8deg);
+  }
+  @media (max-width: 768px) {
+    .industries { padding: 0 20px 60px; }
+    .industry-grid { grid-template-columns: 1fr; gap: 10px; }
+    .industry-card { padding: 22px 18px 18px; }
+  }
+</style>
+
 <div class="cases">
 
   <!-- CASE 1 — ONBOARDING AGENT -->
@@ -677,6 +793,108 @@
     </div>
   </div>
 
+</div>
+
+<div class="industries">
+  <div class="industries-header">
+    <p class="eyebrow">Who we build for</p>
+    <h2>Same problem.<br><span class="grad-text">Different waiting room.</span></h2>
+    <p>Every professional services business has the same issue — too much time spent on communication, follow-up, and admin that a person shouldn't have to do. Here's what that looks like by industry.</p>
+  </div>
+
+  <div class="industry-grid">
+
+    <!-- MEDICAL -->
+    <div class="industry-card">
+      <span class="industry-ico">🩺</span>
+      <p class="industry-name">Medical Practice</p>
+      <h3>Patient Communication Agent</h3>
+      <p>The front desk handles people. The agent handles everything else — confirmations, reminders, no-show recovery, and post-visit follow-ups that actually get sent.</p>
+      <div class="industry-tasks">
+        <span class="industry-task">Appointment reminders & confirmation flows</span>
+        <span class="industry-task">No-show reschedule sequences</span>
+        <span class="industry-task">Post-visit check-ins and care instructions</span>
+        <span class="industry-task">Review monitoring on Healthgrades & Google</span>
+      </div>
+      <span class="industry-note">the calls your staff doesn't have time to make</span>
+    </div>
+
+    <!-- DENTAL -->
+    <div class="industry-card">
+      <span class="industry-ico">🦷</span>
+      <p class="industry-name">Dental Practice</p>
+      <h3>Patient Reactivation Agent</h3>
+      <p>Most practices have hundreds of inactive patients they mean to re-engage. The agent finds them, reaches out, and fills the schedule — without the front desk lifting a finger.</p>
+      <div class="industry-tasks">
+        <span class="industry-task">Recall reminders for overdue hygiene visits</span>
+        <span class="industry-task">Treatment follow-up and acceptance sequences</span>
+        <span class="industry-task">Post-procedure check-ins</span>
+        <span class="industry-task">Review requests after positive appointments</span>
+      </div>
+      <span class="industry-note">your empty slots aren't a demand problem</span>
+    </div>
+
+    <!-- LAW FIRM -->
+    <div class="industry-card">
+      <span class="industry-ico">⚖️</span>
+      <p class="industry-name">Law Firm</p>
+      <h3>Intake & Client Update Agent</h3>
+      <p>Qualifies new inquiries before they hit your desk. Follows up on missing documents. Keeps clients in the loop so they stop calling to ask where things stand.</p>
+      <div class="industry-tasks">
+        <span class="industry-task">New inquiry qualification and routing</span>
+        <span class="industry-task">Document request and chase sequences</span>
+        <span class="industry-task">Case status updates to clients</span>
+        <span class="industry-task">Billing reminder sequences</span>
+      </div>
+      <span class="industry-note">clients who feel informed don't call to check in</span>
+    </div>
+
+    <!-- REAL ESTATE -->
+    <div class="industry-card">
+      <span class="industry-ico">🏡</span>
+      <p class="industry-name">Real Estate Agency</p>
+      <h3>Lead & Transaction Agent</h3>
+      <p>Responds to listing inquiries in under 2 seconds. Runs follow-up sequences on every lead. Checks in with buyers through the transaction. No lead goes cold while you're showing a house.</p>
+      <div class="industry-tasks">
+        <span class="industry-task">Listing inquiry responses — day or night</span>
+        <span class="industry-task">Buyer and seller lead nurture sequences</span>
+        <span class="industry-task">Transaction milestone check-ins</span>
+        <span class="industry-task">Review requests on Zillow and Google</span>
+      </div>
+      <span class="industry-note">the follow-up that closes deals you forgot about</span>
+    </div>
+
+    <!-- ACCOUNTING / FINANCIAL -->
+    <div class="industry-card">
+      <span class="industry-ico">📑</span>
+      <p class="industry-name">Accounting & Financial Services</p>
+      <h3>Client Operations Agent</h3>
+      <p>Tax season or not, clients need things from you — and you need things from them. The agent chases the docs, sends the reminders, and keeps the engagement moving without you managing it.</p>
+      <div class="industry-tasks">
+        <span class="industry-task">Document collection and deadline reminders</span>
+        <span class="industry-task">Onboarding sequences for new clients</span>
+        <span class="industry-task">Seasonal outreach (tax season, year-end reviews)</span>
+        <span class="industry-task">Meeting prep and follow-up notes</span>
+      </div>
+      <span class="industry-note">the work that happens between billable hours</span>
+    </div>
+
+    <!-- HOME SERVICES -->
+    <div class="industry-card">
+      <span class="industry-ico">🔧</span>
+      <p class="industry-name">Home Services & Trades</p>
+      <h3>Sales & Review Agent</h3>
+      <p>You close the job, then move on. The agent follows up for reviews, sends maintenance reminders, and runs reactivation sequences to keep repeat business coming in on its own.</p>
+      <div class="industry-tasks">
+        <span class="industry-task">Post-job review requests (Google, Yelp)</span>
+        <span class="industry-task">Seasonal maintenance outreach</span>
+        <span class="industry-task">Estimate follow-up sequences</span>
+        <span class="industry-task">Referral ask sequences after positive jobs</span>
+      </div>
+      <span class="industry-note">your best customers forget to come back without a nudge</span>
+    </div>
+
+  </div>
 </div>
 
 <div class="next-section">
