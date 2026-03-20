@@ -31,6 +31,7 @@
     color: var(--text);
     font-family: 'Inter', sans-serif;
     -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
   }
 
   /* ── NAV ── */
@@ -416,6 +417,14 @@
     .nav-links { display: none; }
   }
 
+
+  @media (max-width: 768px) {
+    nav { padding: 0 20px; height: 56px; }
+    nav .nav-links { display: none !important; }
+    nav .btn.btn-primary { display: none !important; }
+    nav .nav-cta-desktop { display: none !important; }
+    .hamburger { display: flex !important; }
+  }
 </style>
 </head>
 <body>

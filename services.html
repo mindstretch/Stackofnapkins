@@ -15,7 +15,8 @@
     --accent: #7B6EF6; --accent-light: #A89FF8; --rust: #E8805A; --green: #3DC87A;
   }
   html { scroll-behavior: smooth; }
-  body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; position: relative; }
+  body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased;
+    overflow-x: hidden; position: relative; }
   nav {
     position: sticky; top: 0; z-index: 200;
     display: flex; justify-content: space-between; align-items: center;
@@ -269,6 +270,14 @@
     .nav-links { display: none; }
   }
 
+
+  @media (max-width: 768px) {
+    nav { padding: 0 20px; height: 56px; }
+    nav .nav-links { display: none !important; }
+    nav .btn.btn-primary { display: none !important; }
+    nav .nav-cta-desktop { display: none !important; }
+    .hamburger { display: flex !important; }
+  }
 </style>
 </head>
 <body>

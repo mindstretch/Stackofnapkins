@@ -943,6 +943,8 @@
     .section-heading { font-size: clamp(26px, 7vw, 36px); letter-spacing: -0.8px; }
     .section-sub { font-size: 14px; margin-bottom: 36px; }
     .cards-grid { grid-template-columns: 1fr; gap: 12px; }
+    .card { overflow: hidden; word-break: break-word; }
+    .cards-grid { overflow: hidden; }
     .card { padding: 24px 20px; }
 
     .stats { grid-template-columns: 1fr 1fr; }
@@ -1035,6 +1037,14 @@
     .nav-links { display: none; }
   }
 
+
+  @media (max-width: 768px) {
+    nav { padding: 0 20px; height: 56px; }
+    nav .nav-links { display: none !important; }
+    nav .btn.btn-primary { display: none !important; }
+    nav .nav-cta-desktop { display: none !important; }
+    .hamburger { display: flex !important; }
+  }
 </style>
 </head>
 <body>
