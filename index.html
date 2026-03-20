@@ -923,6 +923,8 @@
     .cards-grid { grid-template-columns: 1fr !important; width: 100%; }
     .card { width: 100%; min-width: 0; box-sizing: border-box; }
     .card h3, .card p { word-break: normal; overflow-wrap: break-word; white-space: normal; }
+    .card.card-featured { grid-column: span 1 !important; grid-template-columns: 1fr !important; }
+    .card-metrics-stack { display: flex; flex-direction: row; gap: 12px; flex-wrap: wrap; }
 
     nav {
       padding: 0 20px;
@@ -956,6 +958,8 @@
     .section-heading { font-size: clamp(26px, 7vw, 36px); letter-spacing: -0.8px; }
     .section-sub { font-size: 14px; margin-bottom: 36px; }
     .cards-grid { grid-template-columns: 1fr; gap: 12px; }
+    .card.card-featured { grid-column: span 1 !important; grid-template-columns: 1fr !important; }
+    .card-metrics-stack { flex-direction: row; flex-wrap: wrap; gap: 12px; }
     .card { overflow: hidden; word-break: break-word; }
     .cards-grid { overflow: hidden; }
     .card { padding: 24px 20px; }
