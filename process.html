@@ -128,6 +128,37 @@
   .footer-joke { font-family: 'Caveat', cursive; font-size: 14px; color: var(--muted2); opacity: 0.5; }
   /* COFFEE RING */
   .coffee-ring { position: absolute; pointer-events: none; mix-blend-mode: multiply; user-select: none; z-index: 0; }
+
+  @media (max-width: 768px) {
+    nav { padding: 0 20px; height: 56px; }
+    .nav-links { display: none; }
+
+    .page-header { padding: 48px 20px 36px; }
+    .page-header h1 { font-size: clamp(28px, 8vw, 42px); letter-spacing: -1px; }
+    .page-header p { font-size: 14px; }
+
+    .timeline { padding: 40px 20px; }
+    .phase { grid-template-columns: 1fr; gap: 24px; padding: 40px 0; }
+    .phase-label { position: static; }
+    .phase-name { font-size: 18px; }
+    .phase-desc { font-size: 14px; }
+    .phase-step { padding: 14px 16px; }
+    .step-title { font-size: 13px; }
+    .step-detail { font-size: 12px; }
+
+    .faq-section { padding: 60px 20px; }
+    .faq-grid { grid-template-columns: 1fr; gap: 28px; }
+    .faq-q { font-size: 14px; }
+    .faq-a { font-size: 13px; }
+
+    .cta { padding: 80px 20px; }
+    .cta h2 { font-size: clamp(26px, 7vw, 40px); }
+    .cta-actions { flex-direction: column; align-items: center; gap: 10px; }
+    .btn-lg { width: 100%; justify-content: center; }
+
+    footer { padding: 24px 20px; flex-direction: column; gap: 12px; text-align: center; }
+    .footer-right { align-items: center; }
+  }
 </style>
 </head>
 <body>

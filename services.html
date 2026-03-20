@@ -167,6 +167,35 @@
     position: absolute; pointer-events: none;
     mix-blend-mode: multiply; user-select: none; z-index: 0;
   }
+
+  @media (max-width: 768px) {
+    nav { padding: 0 20px; height: 56px; }
+    .nav-links { display: none; }
+
+    .page-header { padding: 48px 20px 36px; }
+    .page-header h1 { font-size: clamp(28px, 8vw, 42px); letter-spacing: -1px; }
+    .page-header p { font-size: 14px; }
+
+    .services-list { padding: 40px 20px; }
+    .service-block { grid-template-columns: 1fr; gap: 24px; padding: 40px 0; }
+    .service-label { position: static; }
+    .service-label h2 { font-size: 20px; }
+    .service-desc { font-size: 14px; }
+    .what-it-does { gap: 10px; }
+    .does-text { font-size: 13px; }
+
+    .pricing-section { padding: 60px 20px; }
+    .pricing-grid { grid-template-columns: 1fr; gap: 14px; }
+    .plan-price { font-size: 28px; }
+
+    .cta { padding: 80px 20px; }
+    .cta h2 { font-size: clamp(26px, 7vw, 40px); }
+    .cta-actions { flex-direction: column; align-items: center; gap: 10px; }
+    .btn-lg { width: 100%; justify-content: center; }
+
+    footer { padding: 24px 20px; flex-direction: column; gap: 12px; text-align: center; }
+    .footer-right { align-items: center; }
+  }
 </style>
 </head>
 <body>

@@ -134,6 +134,30 @@
   .footer-right { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; }
   footer p { font-size: 12px; color: var(--muted2); }
   .footer-joke { font-family: 'Caveat', cursive; font-size: 14px; color: var(--muted2); opacity: 0.5; }
+
+  @media (max-width: 768px) {
+    nav { padding: 0 20px; height: 56px; }
+    .nav-links { display: none; }
+
+    .contact-layout {
+      grid-template-columns: 1fr;
+      gap: 40px;
+      padding: 48px 20px;
+    }
+    .contact-left { position: static; }
+    .contact-left h1 { font-size: clamp(28px, 8vw, 42px); letter-spacing: -1px; }
+    .contact-left p { font-size: 14px; }
+    .h-text { font-size: 13px; }
+
+    .field input, .field textarea, .field select { font-size: 16px; } /* prevents iOS zoom */
+    .field-row { grid-template-columns: 1fr; }
+    .submit-btn { font-size: 15px; padding: 16px; }
+
+    .alt-contact { padding: 40px 20px; }
+
+    footer { padding: 24px 20px; flex-direction: column; gap: 12px; text-align: center; }
+    .footer-right { align-items: center; }
+  }
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>

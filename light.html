@@ -907,6 +907,59 @@
     user-select: none;
   }
 
+
+  /* ── MOBILE FIRST ── */
+  @media (max-width: 768px) {
+    nav {
+      padding: 0 20px;
+      height: 56px;
+    }
+    .nav-links { display: none; }
+    .logo { font-size: 13px; padding-left: 20px; }
+    .logo::before { width: 13px; height: 13px; left: 0; }
+    .logo::after { width: 11px; height: 11px; left: 4px; }
+
+    .hero { padding: 60px 20px 48px; text-align: left; }
+    .hero-badge { font-size: 11px; padding: 5px 10px 5px 7px; }
+    h1 { font-size: clamp(36px, 9vw, 52px); letter-spacing: -1.5px; margin-bottom: 8px; }
+    .h1-aside { font-size: 15px; text-align: left; }
+    .hero-sub { font-size: 15px; margin: 0 0 32px; text-align: left; }
+    .hero-actions { flex-direction: column; align-items: flex-start; gap: 10px; margin-bottom: 40px; }
+    .btn-lg { padding: 13px 24px; font-size: 14px; width: 100%; justify-content: center; }
+
+    .dashboard { border-radius: 12px; }
+    .db-metrics { grid-template-columns: 1fr 1fr; }
+    .db-metric { padding: 14px 16px; }
+    .db-metric-val { font-size: 20px; }
+    .db-chart-row { grid-template-columns: 1fr; }
+    .db-chart { border-right: none; border-bottom: 1px solid var(--border); }
+
+    .trust { padding: 36px 20px 28px; }
+    .trust-logos { gap: 20px; flex-wrap: wrap; justify-content: center; }
+    .trust-logo { font-size: 12px; }
+
+    .section { padding: 60px 20px; }
+    .section-heading { font-size: clamp(26px, 7vw, 36px); letter-spacing: -0.8px; }
+    .section-sub { font-size: 14px; margin-bottom: 36px; }
+    .cards-grid { grid-template-columns: 1fr; gap: 12px; }
+    .card { padding: 24px 20px; }
+
+    .stats { grid-template-columns: 1fr 1fr; }
+    .stat { padding: 32px 20px; border-right: none; border-bottom: 1px solid var(--border); }
+    .stat:nth-child(odd) { border-right: 1px solid var(--border); }
+    .stat:last-child { border-bottom: none; }
+    .stat-val { font-size: 34px; }
+
+    .steps { grid-template-columns: 1fr; }
+    .step { padding: 28px 20px; }
+
+    .cta { padding: 80px 20px; }
+    .cta h2 { font-size: clamp(28px, 8vw, 44px); letter-spacing: -1px; }
+    .cta-actions { flex-direction: column; align-items: center; gap: 10px; }
+
+    footer { padding: 24px 20px; flex-direction: column; gap: 12px; text-align: center; }
+    .footer-right { align-items: center; }
+  }
 </style>
 </head>
 <body>
