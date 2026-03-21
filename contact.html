@@ -325,19 +325,6 @@
     </div>
 
     <div class="field">
-      <label>What are you trying to automate?</label>
-      <select>
-        <option value="" disabled selected>Pick the closest match</option>
-        <option>Customer support / inbox management</option>
-        <option>Review monitoring and responses</option>
-        <option>Outreach and follow-up sequences</option>
-        <option>Internal reporting and workflows</option>
-        <option>Business monitoring and alerts</option>
-        <option>Something else entirely</option>
-      </select>
-    </div>
-
-    <div class="field">
       <label>Tell us more</label>
       <textarea placeholder="What's taking your time? What have you tried? What does success look like? The more specific, the better — but don't overthink it."></textarea>
     </div>
@@ -352,6 +339,9 @@
   <p>Prefer email?</p>
   <a href="mailto:hello@stackofnapkins.com">hello@stackofnapkins.com</a>
   <span class="alt-note">we read everything, promise</span>
+  <p style="margin-top: 28px; font-size: 13px; color: var(--muted2); line-height: 1.7;">
+    625 Broad St, Suite 240<br>Newark, NJ 07102
+  </p>
 </div>
 
 <footer>
@@ -387,7 +377,6 @@
       last_name: form.querySelector('[placeholder="Chen"]')?.value || '',
       email: form.querySelector('[type="email"]')?.value || '',
       company: form.querySelector('[placeholder="Your company name"]')?.value || '',
-      use_case: form.querySelector('select')?.value || '',
       message: form.querySelector('textarea')?.value || ''
     }]);
 
