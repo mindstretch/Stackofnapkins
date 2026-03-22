@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Review Management — Stack of Napkins</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;600&display=swap');
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root { --bg:#FFFFFF;--surface:#F6F5FC;--border:rgba(0,0,0,0.07);--text:#0C0B1A;--muted:#6B6880;--muted2:#9996AA;--accent:#7B6EF6;--rust:#E8805A;--green:#3DC87A; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+  nav { position: sticky; top: 0; z-index: 200; display: flex; justify-content: space-between; align-items: center; padding: 0 56px; height: 64px; background: rgba(255,255,255,0.92); backdrop-filter: blur(24px); border-bottom: 1px solid var(--border); }
+  .logo { font-size: 14px; font-weight: 600; color: var(--text); text-decoration: none; position: relative; padding-left: 24px; }
+  .logo-accent { color: var(--accent); }
+  .logo::before { content:''; position:absolute; top:50%; left:0; transform:translateY(-50%); width:16px; height:16px; border-radius:50%; border:1.5px solid rgba(123,110,246,0.22); }
+  .logo::after { content:''; position:absolute; top:50%; left:5px; transform:translateY(-38%); width:14px; height:14px; border-radius:50%; border:1px solid rgba(232,128,90,0.15); }
+  .nav-links { display:flex; list-style:none; gap:32px; }
+  .nav-links a { font-size:13px; color:var(--muted); text-decoration:none; transition:color 0.16s; }
+  .nav-links a:hover { color:var(--text); }
+  .btn { display:inline-flex; align-items:center; gap:6px; padding:8px 18px; border-radius:7px; font-size:13px; font-weight:500; text-decoration:none; transition:all 0.17s; border:none; cursor:pointer; }
+  .btn-primary { background:var(--accent); color:#fff; box-shadow:0 2px 14px rgba(123,110,246,0.3); }
+  .btn-primary:hover { background:#8B7EF8; transform:translateY(-1px); }
+  .hamburger { display:none; flex-direction:column; gap:5px; cursor:pointer; padding:4px; background:none; border:none; }
+  .hamburger span { display:block; width:20px; height:2px; background:var(--text); border-radius:2px; }
+  .mobile-menu { display:none; position:fixed; inset:64px 0 0 0; background:rgba(255,255,255,0.98); backdrop-filter:blur(24px); z-index:190; flex-direction:column; padding:32px 24px; gap:8px; border-top:1px solid var(--border); }
+  .mobile-menu.open { display:flex; }
+  .mobile-menu a { font-size:18px; font-weight:500; color:var(--text); text-decoration:none; padding:14px 0; border-bottom:1px solid var(--border); }
+  .case-wrap { max-width: 1100px; margin: 0 auto; padding: 64px 56px; display: grid; grid-template-columns: 260px 1fr; gap: 80px; align-items: start; }
+  .sidebar { position: sticky; top: 88px; }
+  .sidebar-ico { font-size: 64px; margin-bottom: 32px; display: block; }
+  .sidebar-field { margin-bottom: 22px; }
+  .sidebar-label { font-size: 12px; font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase; color: var(--muted2); margin-bottom: 5px; }
+  .sidebar-val { font-size: 14px; color: var(--text); line-height: 1.5; }
+  .sidebar-tag { display: inline-flex; align-items: center; padding: 4px 12px; border-radius: 100px; font-size: 11px; font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase; background: rgba(61,200,122,0.08); color: var(--green); border: 1px solid rgba(61,200,122,0.2); margin-bottom: 24px; }
+  .back-link { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; color: var(--muted); text-decoration: none; margin-bottom: 32px; transition: color 0.15s; }
+  .back-link:hover { color: var(--accent); }
+  .case-content { min-width: 0; }
+  .case-eyebrow { font-size: 11px; font-weight: 600; letter-spacing: 1.2px; text-transform: uppercase; color: var(--muted2); margin-bottom: 12px; }
+  .case-title { font-size: clamp(28px, 3.5vw, 44px); font-weight: 700; letter-spacing: -1.2px; line-height: 1.1; margin-bottom: 24px; }
+  .case-title em { font-style: normal; color: var(--green); }
+  .case-intro { font-size: 17px; color: var(--muted); line-height: 1.75; margin-bottom: 56px; padding-bottom: 48px; border-bottom: 1px solid var(--border); }
+  .case-section { margin-bottom: 52px; }
+  .case-section h2 { font-size: 24px; font-weight: 700; letter-spacing: -0.5px; margin-bottom: 16px; }
+  .case-section p { font-size: 15px; color: var(--muted); line-height: 1.75; }
+  .case-section p + p { margin-top: 14px; }
+  .results-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; margin-top: 28px; }
+  .result-item { padding: 28px 0; border-bottom: 1px solid var(--border); }
+  .result-item:nth-child(odd) { padding-right: 40px; border-right: 1px solid var(--border); }
+  .result-item:nth-child(even) { padding-left: 40px; }
+  .result-item:nth-last-child(-n+2) { border-bottom: none; }
+  .result-val { font-size: 32px; font-weight: 700; letter-spacing: -1px; color: var(--accent); margin-bottom: 4px; }
+  .result-val.green { color: var(--green); }
+  .result-title { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 8px; }
+  .result-desc { font-size: 13px; color: var(--muted); line-height: 1.6; }
+  .case-cta { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 40px; margin-top: 64px; text-align: center; }
+  .case-cta h3 { font-size: 22px; font-weight: 700; letter-spacing: -0.5px; margin-bottom: 10px; }
+  .case-cta p { font-size: 14px; color: var(--muted); margin-bottom: 24px; }
+  footer { border-top: 1px solid var(--border); padding: 32px 56px; display: flex; justify-content: space-between; align-items: center; }
+  footer p { font-size: 12px; color: var(--muted2); }
+  .footer-links { display: flex; gap: 24px; list-style: none; }
+  .footer-links a { font-size: 12px; color: var(--muted2); text-decoration: none; }
+  @media (max-width: 900px) {
+    nav { padding: 0 24px; } .nav-links, .nav-cta { display: none; } .hamburger { display: flex; }
+    .case-wrap { grid-template-columns: 1fr; padding: 40px 24px; gap: 40px; } .sidebar { position: static; }
+    .results-grid { grid-template-columns: 1fr; }
+    .result-item { padding: 20px 0; border-right: none !important; padding-left: 0 !important; padding-right: 0 !important; }
+    footer { padding: 24px; flex-direction: column; gap: 16px; }
+  }
+</style>
+</head>
+<body>
+<nav>
+  <a href="/" class="logo">Stack of <span class="logo-accent">Napkins</span></a>
+  <ul class="nav-links">
+    <li><a href="/work">Work</a></li><li><a href="/services">Services</a></li><li><a href="/security">Security</a></li><li><a href="/about">About</a></li>
+  </ul>
+  <a href="/contact" class="btn btn-primary nav-cta">Let's talk →</a>
+  <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="/work">Work</a><a href="/services">Services</a><a href="/security">Security</a><a href="/about">About</a>
+  <a href="/contact" class="btn btn-primary">Let's talk →</a>
+</div>
+
+<div class="case-wrap">
+  <aside class="sidebar">
+    <a href="/work" class="back-link">← All work</a>
+    <span class="sidebar-ico">⭐</span>
+    <span class="sidebar-tag">Portfolio</span>
+    <div class="sidebar-field"><div class="sidebar-label">Industry</div><div class="sidebar-val">Property Management</div></div>
+    <div class="sidebar-field"><div class="sidebar-label">Size</div><div class="sidebar-val">200+ units, 3 staff</div></div>
+    <div class="sidebar-field"><div class="sidebar-label">Location</div><div class="sidebar-val">Newark, NJ</div></div>
+    <div class="sidebar-field"><div class="sidebar-label">Agent type</div><div class="sidebar-val">Review Management</div></div>
+    <div class="sidebar-field"><div class="sidebar-label">Platforms</div><div class="sidebar-val">Google, Apartments.com, Zillow</div></div>
+    <div class="sidebar-field"><div class="sidebar-label">Live in</div><div class="sidebar-val">14 days</div></div>
+  </aside>
+
+  <main class="case-content">
+    <p class="case-eyebrow">Case Study · Property Management</p>
+    <h1 class="case-title">From 31% to <em>100%</em><br>review response rate.</h1>
+    <p class="case-intro">A property management company managing 200+ units across Newark was responding to roughly a third of their Google reviews — weeks late, off-brand, inconsistently written depending on who happened to get to it. Negative reviews were sitting unanswered for days. They hadn't logged into Apartments.com in months. The agent changed all of that without anyone on the team changing their routine.</p>
+
+    <div class="case-section">
+      <h2>Challenge</h2>
+      <p>The company had three staff members handling operations, maintenance coordination, and tenant communications. Review management wasn't anyone's job — it was everyone's afterthought. Google reviews averaged a response rate of 31%, usually days after posting. Negative reviews occasionally went completely unanswered.</p>
+      <p>The owner knew it was a problem. A 4.1 star rating was suppressing their appearance in local search results and costing them prospective tenants who compared options before calling. But with three people running 200+ units, nobody had the bandwidth to own it consistently.</p>
+    </div>
+
+    <div class="case-section">
+      <h2>Solution</h2>
+      <p>We built a review management agent that monitors Google, Apartments.com, and Zillow in real time. The moment a review lands, the agent drafts a response trained on the company's voice — direct, professional, acknowledging the specific detail the tenant mentioned. Positive reviews get an auto-posted response within the hour. Negative reviews get escalated to the owner with a drafted response ready to approve with one tap.</p>
+      <p>Weekly briefings summarize review volume, sentiment trend, and any recurring themes (maintenance response time, parking, noise complaints) so the owner can address systemic issues — not just respond to individual posts.</p>
+    </div>
+
+    <div class="case-section">
+      <h2>Results</h2>
+      <div class="results-grid">
+        <div class="result-item">
+          <div class="result-val green">100%</div>
+          <div class="result-title">Response rate</div>
+          <div class="result-desc">Every review on every platform responded to within 60 minutes of posting. Up from 31%.</div>
+        </div>
+        <div class="result-item">
+          <div class="result-val">4.2 → 4.7</div>
+          <div class="result-title">Average star rating</div>
+          <div class="result-desc">Consistent, thoughtful responses — especially to negatives — moved the overall rating within 90 days.</div>
+        </div>
+        <div class="result-item">
+          <div class="result-val green">0 min</div>
+          <div class="result-title">Staff time per response</div>
+          <div class="result-desc">Owner reviews and approves negatives in under 2 minutes. Everything else is handled automatically.</div>
+        </div>
+        <div class="result-item">
+          <div class="result-val">+22%</div>
+          <div class="result-title">Inbound inquiry increase</div>
+          <div class="result-desc">Local search visibility improved as rating and review response consistency improved. More calls, more tours booked.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="case-cta">
+      <h3>Managing properties or a service business with reviews?</h3>
+      <p>Review management is one of the fastest-payback agents we build. We can have it scoped in a single call.</p>
+      <a href="/contact" class="btn btn-primary">Let's talk →</a>
+    </div>
+  </main>
+</div>
+
+<footer>
+  <p>© 2026 Stack of Napkins · 625 Broad St Suite 240, Newark NJ 07102</p>
+  <ul class="footer-links"><li><a href="/work">Work</a></li><li><a href="/services">Services</a></li><li><a href="/contact">Contact</a></li></ul>
+</footer>
+<script>
+  const h = document.getElementById('hamburger'), m = document.getElementById('mobileMenu');
+  h.addEventListener('click', () => m.classList.toggle('open'));
+</script>
+</body>
+</html>
