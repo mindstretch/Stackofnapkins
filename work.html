@@ -130,13 +130,14 @@
   .industry-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 40px; }
   .industry-card {
     background: var(--bg); border: 1px solid var(--border); border-radius: 12px;
-    padding: 24px 22px; display: flex; align-items: center; gap: 14px;
-    transition: border-color 0.2s, box-shadow 0.2s;
+    padding: 24px 22px; display: flex; align-items: flex-start; gap: 14px;
+    transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
   }
-  .industry-card:hover { border-color: rgba(123,110,246,0.25); box-shadow: 0 4px 20px rgba(123,110,246,0.07); }
-  .industry-ico { font-size: 28px; flex-shrink: 0; }
+  .industry-card:hover { border-color: rgba(123,110,246,0.25); box-shadow: 0 4px 20px rgba(123,110,246,0.07); background: rgba(123,110,246,0.02); }
+  .industry-ico { font-size: 28px; flex-shrink: 0; margin-top: 2px; }
   .industry-card h3 { font-size: 14px; font-weight: 600; margin-bottom: 3px; }
-  .industry-card p { font-size: 12px; color: var(--muted); line-height: 1.5; }
+  .industry-card p { font-size: 12px; color: var(--muted); line-height: 1.5; margin-bottom: 6px; }
+  .industry-quip { font-family: 'Caveat', cursive; font-size: 13px; color: var(--rust); opacity: 0.65; display: block; transform: rotate(-0.8deg); }
 
   /* CTA */
   .cta-section { text-align: center; padding: 96px 56px; position: relative; overflow: hidden; }
@@ -309,12 +310,12 @@
     <h2 style="font-size:clamp(26px,3vw,36px);font-weight:700;letter-spacing:-0.8px;margin-bottom:8px;">Who we build for.</h2>
     <p style="font-size:15px;color:var(--muted);max-width:480px;">Professional services businesses where time is the product and repetitive ops are eating it.</p>
     <div class="industry-grid">
-      <div class="industry-card"><span class="industry-ico">🏥</span><div><h3>Medical Practices</h3><p>Intake, reminders, follow-ups, patient comms</p></div></div>
-      <div class="industry-card"><span class="industry-ico">🦷</span><div><h3>Dental Offices</h3><p>No-show recovery, reviews, scheduling ops</p></div></div>
-      <div class="industry-card"><span class="industry-ico">⚖️</span><div><h3>Law Firms</h3><p>Client intake, document collection, onboarding</p></div></div>
-      <div class="industry-card"><span class="industry-ico">🏠</span><div><h3>Real Estate</h3><p>Lead response, showing follow-up, reviews</p></div></div>
-      <div class="industry-card"><span class="industry-ico">📊</span><div><h3>Accounting & Finance</h3><p>Client intake, document collection, reporting</p></div></div>
-      <div class="industry-card"><span class="industry-ico">🔧</span><div><h3>Home Services</h3><p>Lead response, invoice follow-up, review management</p></div></div>
+      <div class="industry-card"><span class="industry-ico">🏥</span><div><h3>Medical Practices</h3><p>Patient intake, reminders, follow-ups, comms</p><span class="industry-quip">your front desk, but faster</span></div></div>
+      <div class="industry-card"><span class="industry-ico">🦷</span><div><h3>Dental Offices</h3><p>No-show recovery, review management, scheduling ops</p><span class="industry-quip">empty chairs are expensive</span></div></div>
+      <div class="industry-card"><span class="industry-ico">⚖️</span><div><h3>Law Firms</h3><p>Client intake, document collection, consult prep</p><span class="industry-quip">billable hours don't include chasing docs</span></div></div>
+      <div class="industry-card"><span class="industry-ico">🏡</span><div><h3>Real Estate</h3><p>Lead response, showing follow-up, transaction updates</p><span class="industry-quip">first to respond wins the deal</span></div></div>
+      <div class="industry-card"><span class="industry-ico">📑</span><div><h3>Accounting & Finance</h3><p>Client onboarding, document requests, deadline reminders</p><span class="industry-quip">tax season doesn't have to feel like tax season</span></div></div>
+      <div class="industry-card"><span class="industry-ico">🔧</span><div><h3>Home Services</h3><p>Lead capture, invoice follow-up, review management</p><span class="industry-quip">jobs are won and lost in the follow-up</span></div></div>
     </div>
   </div>
 </div>
