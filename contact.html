@@ -241,7 +241,7 @@
     .hamburger { display: flex !important; }
   }
 </style>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 </head>
 <body>
 
@@ -353,12 +353,6 @@
 </footer>
 
 <script>
-  const { createClient } = supabase;
-  const sb = createClient(
-    'https://hqnhovkfofbxfqtftewa.supabase.co',
-    'sb_publishable_tKxwigOEVQoEt1DgKZaxPg_jb6Vkaey'
-  );
-
   document.getElementById('contactForm').addEventListener('submit', async (e) => {
     e.preventDefault();
     const btn = document.getElementById('submitBtn');
@@ -368,28 +362,32 @@
     btn.textContent = 'Sending...';
     btn.disabled = true;
 
-    const fields = form.querySelectorAll('input, textarea, select');
-    const data = {};
-    fields.forEach(f => { if (f.name) data[f.name] = f.value; });
-
-    const { error } = await sb.from('contact_submissions').insert([{
+    const payload = {
       first_name: form.querySelector('[placeholder="Alex"]')?.value || '',
       last_name: form.querySelector('[placeholder="Chen"]')?.value || '',
       email: form.querySelector('[type="email"]')?.value || '',
       company: form.querySelector('[placeholder="Your company name"]')?.value || '',
       message: form.querySelector('textarea')?.value || ''
-    }]);
+    };
 
-    if (error) {
-      btn.textContent = 'Something went wrong — try emailing us directly';
-      btn.style.background = '#E8805A';
-      btn.disabled = false;
-      console.error(error);
-    } else {
+    try {
+      const res = await fetch('/api/notify-contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+
+      if (!res.ok) throw new Error('Server error');
+
       btn.textContent = "We got it. You'll hear from us soon. ✓";
       btn.style.background = '#3DC87A';
       note.textContent = 'Usually same day.';
       form.querySelectorAll('input, textarea, select').forEach(f => f.disabled = true);
+    } catch (err) {
+      btn.textContent = 'Something went wrong — try emailing us directly';
+      btn.style.background = '#E8805A';
+      btn.disabled = false;
+      console.error(err);
     }
   });
 </script>
