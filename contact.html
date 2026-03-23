@@ -371,9 +371,14 @@
     };
 
     try {
-      const res = await fetch('/api/notify-contact', {
+      const res = await fetch('https://hqnhovkfofbxfqtftewa.supabase.co/rest/v1/contact_submissions', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imhxbmhvdmtmb2ZieGZxdGZ0ZXdhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM5Njc0NTAsImV4cCI6MjA4OTU0MzQ1MH0.zXq1PTQyiJOS0rpOcTM7lttdwzH2StsEBlPkDULqAoQ',
+          'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imhxbmhvdmtmb2ZieGZxdGZ0ZXdhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM5Njc0NTAsImV4cCI6MjA4OTU0MzQ1MH0.zXq1PTQyiJOS0rpOcTM7lttdwzH2StsEBlPkDULqAoQ',
+          'Prefer': 'return=minimal',
+        },
         body: JSON.stringify(payload),
       });
 

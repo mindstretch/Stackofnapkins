@@ -1,2 +1,3 @@
 .env.local
 secrets.env
+.vercel
